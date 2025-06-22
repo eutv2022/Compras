@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Compras</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🛒 Lista de Compras</h1>
+
+    <form id="formulario">
+      <input type="text" id="nombre" placeholder="Nombre del producto" required />
+      <div class="input-group">
+        <input type="number" id="cantidad" placeholder="Cantidad" required min="1" />
+        <select id="unidad">
+          <option value="unidad">unidad</option>
+          <option value="kg">kg</option>
+          <option value="litros">litros</option>
+          <option value="gramos">gramos</option>
+          <option value="paquetes">paquetes</option>
+        </select>
+      </div>
+      <input type="number" id="valorUnitario" placeholder="Valor unitario ($)" step="0.01" required />
+      <select id="categoria" required>
+        <option value="" disabled selected>Categoría</option>
+        <option value="Proteínas">Proteínas</option>
+        <option value="Alacena">Alacena</option>
+        <option value="Vegetales">Vegetales</option>
+        <option value="Limpieza">Limpieza</option>
+        <option value="Lácteos">Lácteos</option>
+      </select>
+      <select id="lugar" required>
+        <option value="" disabled selected>Dónde comprar</option>
+        <option value="Ara">Ara</option>
+        <option value="D1">D1</option>
+        <option value="Fruver">Fruver</option>
+        <option value="MercaPlaza">MercaPlaza</option>
+        <option value="Viejo del Queso">Viejo del Queso</option>
+      </select>
+      <button type="submit">Agregar producto</button>
+    </form>
+
+    <hr />
+
+    <div class="zona-productos">
+      <!-- Panel lateral -->
+      <aside id="panelTotales">
+        <h3>📊 Totales</h3>
+        <select id="filtroTotal">
+          <option value="General">General</option>
+          <option value="Categoria">Categoria</option>
+          <option value="Lugar">Lugar</option>
+        </select>
+        <button id="btnCalcularTotal">TOTAL</button>
+        <div id="resultadoTotales"></div>
+      </aside>
+
+      <!-- Sección de productos -->
+      <section id="listaProductos">
+        <!-- Encabezado y productos se renderizan desde JS -->
+      </section>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

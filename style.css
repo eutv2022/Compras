@@ -1,0 +1,382 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fefefe;
+    padding: 20px;
+    margin: 0; /* Asegura que no haya márgenes por defecto en el body */
+}
+
+.container {
+    max-width: 1200px; /* Aumenta el ancho máximo para acomodar el panel y la tabla */
+    margin: 0 auto;
+    padding: 0 15px; /* Añade un poco de padding lateral */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Ajusta el espacio entre elementos del formulario */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+form input,
+form select,
+form button {
+    flex: 1 1 auto; /* Permite que los elementos crezcan y encojan */
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box; /* Asegura que padding y border estén incluidos en el ancho */
+}
+
+form button {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+.input-group {
+    display: flex;
+    flex: 1 1 200px; /* Ajusta el tamaño base del grupo de cantidad/unidad */
+    gap: 10px;
+}
+
+.input-group input,
+.input-group select {
+    flex: 1; /* Permite que ambos elementos dentro del grupo tomen el mismo espacio */
+}
+
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    margin: 40px 0;
+}
+
+/* --- Estilos para la distribución principal (panel y tabla) --- */
+.zona-productos {
+    display: flex; /* Utiliza Flexbox para el layout */
+    align-items: flex-start; /* Alinea los elementos al inicio (arriba) */
+    gap: 30px; /* Espacio entre el panel y la tabla */
+    margin-top: 20px;
+}
+
+#panelTotales {
+    /* Eliminé las propiedades float y width fijas que tenías,
+       ya que flexbox las maneja mejor con flex-basis o width */
+    flex: 0 0 280px; /* No crece (0), no encoge (0), ancho base de 280px */
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px; /* Aumenté el padding para un mejor aspecto */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Hace que el panel se "pegue" al scrollear */
+    top: 20px; /* Distancia desde la parte superior de la ventana al pegarse */
+    align-self: flex-start; /* Asegura que el panel se alinee al inicio dentro del flex container */
+}
+
+#panelTotales h3 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#panelTotales select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#panelTotales button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#panelTotales button:hover {
+    background-color: #0056b3;
+}
+
+#resultadoTotales {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #e6f7ff; /* Un azul más suave */
+    border-radius: 8px;
+    border: 1px solid #b3e0ff;
+    font-size: 1.05rem;
+    color: #333;
+    min-height: 80px; /* Para que siempre tenga un tamaño mínimo */
+}
+
+#resultadoTotales strong {
+    color: #2e7d32;
+    font-size: 1.15rem;
+}
+
+.total-actualizado {
+    animation: flash 1s ease;
+}
+
+@keyframes flash {
+    0% {
+        background-color: #d4edda; /* Verde más claro */
+        transform: scale(1.02);
+    }
+    50% {
+        background-color: #c3e6cb;
+    }
+    100% {
+        background-color: #e6f7ff; /* Vuelve al color original del resultadoTotales */
+        transform: scale(1);
+    }
+}
+
+/* --- Estilos para la tabla de productos --- */
+#listaProductos {
+    flex: 1; /* Permite que la sección de productos ocupe todo el espacio restante */
+    display: flex; /* Cambié a flexbox para controlar la lista de productos */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Asegura que los bordes redondeados se vean bien */
+}
+
+/* Encabezado de la tabla */
+.encabezado {
+    font-weight: bold;
+    background-color: #e9ecef; /* Un gris más suave para el encabezado */
+    padding: 12px 10px;
+    border-bottom: 2px solid #dee2e6;
+    color: #495057;
+    display: grid; /* Sigue usando grid para las columnas internas */
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 0.5fr 0.5fr; /* Añadí dos columnas para los botones */
+    gap: 8px;
+    align-items: center;
+}
+
+/* Fila individual de producto */
+.item {
+    background-color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: grid; /* Sigue usando grid para las columnas internas */
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 0.5fr 0.5fr; /* Añadí dos columnas para los botones */
+    gap: 8px;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.item:hover {
+    background-color: #f8f9fa; /* Color al pasar el mouse */
+}
+
+.item:last-child {
+    border-bottom: none; /* Elimina el borde de la última fila */
+}
+
+.item.comprado {
+    opacity: 0.7; /* Ligeramente más transparente */
+    text-decoration: line-through;
+    background-color: #e6ffe6; /* Un verde más sutil para comprado */
+}
+
+/* Estilos para las celdas individuales dentro de la fila/encabezado */
+.fila > div,
+.item > div,
+.encabezado > div {
+    /* No necesitan estilos de display grid aquí, ya que la fila ya es grid */
+    padding: 0 5px; /* Pequeño padding interno para las celdas */
+    word-wrap: break-word; /* Rompe palabras largas si es necesario */
+}
+
+/* Estilos específicos para los botones dentro de la tabla */
+.btn-editar,
+.btn-eliminar {
+    background: none;
+    border: none;
+    font-size: 1.1rem; /* Un poco más pequeño para que no ocupen tanto */
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap; /* Evita que el texto de los botones se rompa */
+}
+
+.btn-editar {
+    color: #007bff;
+}
+
+.btn-editar:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+}
+
+.btn-eliminar {
+    color: #dc3545;
+}
+
+.btn-eliminar:hover {
+    color: #a71d2a;
+    transform: scale(1.1);
+}
+
+/* Celda resaltada cuando el producto está en modo edición */
+.celda-editando {
+    background-color: #fff3cd; /* Un amarillo más suave */
+    border: 1px solid #ffc107;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    transition: all 0.3s ease;
+}
+
+/* Estilos para el grupo de categoría */
+.grupo-categoria {
+    grid-column: span 9; /* Debe abarcar todas las 9 columnas ahora (7 de datos + 2 de botones) */
+    background-color: #d4edda; /* Un verde más suave */
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 10px; /* Espacio después de la categoría */
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #155724; /* Color de texto más oscuro */
+    border-left: 5px solid #28a745; /* Verde de la marca */
+    display: flex; /* Asegura que el contenido esté centrado o bien distribuido */
+    justify-content: center; /* Centra el texto */
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 992px) {
+    .zona-productos {
+        flex-direction: column; /* Apila el panel y la tabla en pantallas más pequeñas */
+        align-items: center; /* Centra los elementos apilados */
+    }
+
+    #panelTotales {
+        width: 90%; /* Hace que el panel sea más ancho en pantallas pequeñas */
+        max-width: 400px; /* Limita el ancho máximo */
+        position: static; /* Quita el sticky cuando se apila */
+        margin-bottom: 30px;
+    }
+
+    #listaProductos .encabezado,
+    #listaProductos .item {
+        grid-template-columns: repeat(3, 1fr) repeat(2, 0.5fr); /* Ajusta las columnas para pantallas más pequeñas, solo mostrando algunos */
+        /* O considera ocultar algunas columnas y mostrarlas en una vista de detalle */
+        font-size: 0.9em; /* Reduce el tamaño de la fuente */
+    }
+
+    /* Puedes ocultar algunas columnas para pantallas más pequeñas si son muchas */
+    .item > div:nth-child(3), /* Cantidad */
+    .item > div:nth-child(4), /* Valor Unitario */
+    .item > div:nth-child(5), /* Valor Total */
+    .item > div:nth-child(6), /* Categoría */
+    .item > div:nth-child(7) { /* Lugar */
+        display: none; /* Oculta estas columnas por defecto */
+    }
+
+    .encabezado > div:nth-child(3),
+    .encabezado > div:nth-child(4),
+    .encabezado > div:nth-child(5),
+    .encabezado > div:nth-child(6),
+    .encabezado > div:nth-child(7) {
+        display: none;
+    }
+
+    .item > div:nth-child(1), /* Nombre */
+    .item > div:nth-child(2), /* Estado (Comprado/No comprado) */
+    .item > div:nth-child(8), /* Botón Editar */
+    .item > div:nth-child(9) { /* Botón Eliminar */
+        display: block; /* Asegura que estos se muestren */
+    }
+
+    .encabezado > div:nth-child(1),
+    .encabezado > div:nth-child(2),
+    .encabezado > div:nth-child(8),
+    .encabezado > div:nth-child(9) {
+        display: block;
+    }
+
+    .grupo-categoria {
+        grid-column: span 5; /* Ajusta el span para las columnas visibles */
+    }
+}
+
+@media (max-width: 600px) {
+    form {
+        flex-direction: column; /* Apila los elementos del formulario */
+    }
+
+    form input,
+    form select,
+    form button,
+    .input-group {
+        flex: none; /* Quita el flex-grow para que cada elemento ocupe su ancho */
+        width: 100%; /* Ocupa todo el ancho disponible */
+    }
+
+    .input-group input,
+    .input-group select {
+        width: 50%; /* Divide el ancho del grupo en dos */
+    }
+
+    #panelTotales {
+        width: 95%; /* Más ancho en móviles */
+    }
+
+    /* Puedes simplificar aún más la tabla aquí o hacerla deslizable (overflow-x) */
+    #listaProductos .encabezado,
+    #listaProductos .item {
+        grid-template-columns: 1.5fr 0.5fr 1fr 1fr; /* Nombre, Estado, Editar, Eliminar */
+        font-size: 0.8em;
+    }
+
+    .item > div:nth-child(3), /* Cantidad */
+    .item > div:nth-child(4), /* Valor Unitario */
+    .item > div:nth-child(5), /* Valor Total */
+    .item > div:nth-child(6), /* Categoría */
+    .item > div:nth-child(7) { /* Lugar */
+        display: none;
+    }
+
+    .encabezado > div:nth-child(3),
+    .encabezado > div:nth-child(4),
+    .encabezado > div:nth-child(5),
+    .encabezado > div:nth-child(6),
+    .encabezado > div:nth-child(7) {
+        display: none;
+    }
+
+    .grupo-categoria {
+        grid-column: span 4;
+    }
+}

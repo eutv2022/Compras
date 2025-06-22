@@ -1,0 +1,29 @@
+/* Estilos para mostrar en columnas */
+#listaProductos {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columnas iguales */
+  gap: 8px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+#listaProductos > .encabezado {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #444;
+  padding: 6px;
+}
+
+.item {
+  display: contents; /* permite que los hijos se ubiquen en el grid del contenedor */
+}
+
+.item > div {
+  padding: 6px;
+  border-bottom: 1px solid #ccc;
+}
+
+.comprado > div {
+  background-color: #d8ffd8;
+  text-decoration: line-through;
+}
